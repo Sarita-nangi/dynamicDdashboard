@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Header from './components/Header';
+import StockLineChart from './components/LineChart';
+import StockBarChart from './components/BarChart';
+import Dropdown from './components/Dropdown';
+import DateRangeSlider from './components/DateRangeSlider';
 
-function App() {
+const App = () => {
+  const [stockSymbol, setStockSymbol] = useState('AAPL');
+  const [dateRange, setDateRange] = useState('1m');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      <Dropdown
+        options={[
+          { label: 'Apple', value: 'AAPL' },
+          { label: 'Google', value: 'GOOGL' },
+          { label: 'Amazon', value: 'AMZN' },
+        ]}
+        selected={stockSymbol}
+        onChange={setStockSymbol}
+      />
+      <DateRangeSlider
+        min="1"
+        max="12"
+        value={dateRange}
+        onChange={setDateRange}
+      />
+      <StockLineChart stockSymbol={stockSymbol} dateRange={dateRange} />
+      <StockBarChart stockSymbol={stockSymbol} dateRange={dateRange} />
     </div>
   );
-}
+};
 
 export default App;
+
+
